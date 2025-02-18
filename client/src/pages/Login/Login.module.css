@@ -1,0 +1,118 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 1rem;
+}
+
+.formWrapper {
+  background-color: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 22rem;
+  margin-top: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.inputGroup {
+  margin-bottom: 2rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #4e9bff;
+  outline: none;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #ca3681;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.submitButton:hover {
+  background-color: #ad2f6e;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.footerText {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.registerLink {
+  font-size: 1rem;
+  color: #ca3681;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.registerLink:hover {
+  color: #ad2f6e;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .formWrapper {
+    padding: 2rem;
+    max-width: 25rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer {
+    margin-top: 1.5rem;
+  }
+}

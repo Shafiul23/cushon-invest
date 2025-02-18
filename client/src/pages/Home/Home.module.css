@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f4f7fc;
+  min-height: 90vh;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: #666;
+}
+
+.description {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  line-height: 1.4;
+  max-width: 800px;
+}
+
+p {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+.buttonPrimary {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 90%;
+}
+
+.buttonPrimary {
+  background-color: #ca3681;
+}
+
+.buttonPrimary:hover {
+  background-color: #ad2f6e;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .bodyContainer {
+    text-align: left;
+  }
+
+  .buttonGroup {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    width: auto;
+  }
+
+  .buttonPrimary {
+    width: auto;
+  }
+}
