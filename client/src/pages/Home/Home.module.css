@@ -1,4 +1,4 @@
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,25 +6,40 @@
   background-color: #f4f7fc;
   min-height: 90vh;
   box-sizing: border-box;
+} */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  min-height: 90vh;
+  box-sizing: border-box;
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 3rem;
+  font-weight: bold;
   color: #333;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .subtitle {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #666;
+  margin-bottom: 3rem;
 }
 
 .description {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   text-align: left;
-  line-height: 1.4;
-  max-width: 800px;
+  line-height: 1.8;
+  max-width: 900px;
+  color: #f4f4f4;
 }
 
 p {
@@ -32,6 +47,34 @@ p {
   color: #444;
   margin-bottom: 1.5rem;
   line-height: 1.6;
+}
+
+.cards {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555;
 }
 
 .buttonGroup {
@@ -51,16 +94,19 @@ p {
   color: white;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   width: 90%;
-}
-
-.buttonPrimary {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #ca3681;
 }
 
 .buttonPrimary:hover {
   background-color: #ad2f6e;
+  transform: scale(1.05);
+}
+
+.buttonPrimary:active {
+  transform: scale(0.98);
 }
 
 @media (min-width: 768px) {

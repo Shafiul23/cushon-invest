@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 
 function Home() {
   const { userId } = useAuth();
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Welcome to Cushon</h1>
@@ -11,22 +12,25 @@ function Home() {
         Smart workplace savings and pension solutions, now available to
         individual investors.
       </p>
-      <div className={styles.description}>
-        <p>
-          Born from a simple idea: setting up an ISA and getting decent returns
-          shouldn't be hard. With years of experience and innovation, Cushon has
-          been at the forefront of workplace pensions and savings. Our CEO, Ben
-          Pollard, founded Cushon (formerly Smarterly) after facing frustrations
-          with online ISAs. Now, we offer smart, easy-to-use financial products
-          for thousands of people to secure their financial future.
-        </p>
-        <p>
-          Looking to start investing? With Cushon, you can invest directly into
-          a single fund, like the Cushon Equities Fund. Whether you're just
-          starting or have a lump sum to invest, we provide a smooth and secure
-          process to make it easy for you to grow your savings.
-        </p>
+
+      <div className={styles.cards}>
+        <div className={styles.card}>
+          <h3>Easy ISA Setup</h3>
+          <p>Setting up an ISA and getting decent returns shouldn't be hard.</p>
+        </div>
+        <div className={styles.card}>
+          <h3>Retirement Savings Made Easy</h3>
+          <p>
+            Many people don't save enough for retirement. Cushon aims to help
+            solve this issue.
+          </p>
+        </div>
+        <div className={styles.card}>
+          <h3>Investment Made Simple</h3>
+          <p>We provide a smooth and secure process to grow your savings.</p>
+        </div>
       </div>
+
       <div className={styles.buttonGroup}>
         {!userId ? (
           <>
