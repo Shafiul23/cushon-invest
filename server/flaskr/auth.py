@@ -4,6 +4,7 @@ import datetime
 import re
 
 from flask import Blueprint, request, jsonify, g
+from flask_cors import CORS
 from werkzeug.security import check_password_hash, generate_password_hash
 from flaskr.db import get_db
 
@@ -11,6 +12,7 @@ SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+CORS(bp, supports_credentials=True)
 
 def generate_jwt(user_id, username):
     payload = {
@@ -103,4 +105,53 @@ def login():
 
     except Exception as e:
         print(f"Error during login: {e}")
+        return {"error": "An unexpected error occurred."}, 500
+
+
+@bp.route('/invest', methods=['POST'])
+def invest():
+    try:
+        data = request.get_json()
+        if not data:
+            return {"error": "Invalid input"}, 400
+
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return {"error": "Missing token"}, 401
+
+        token = auth_header.split(" ")[1]
+        decoded = decode_jwt(token)
+        if isinstance(decoded, tuple):
+            return decoded
+
+        user_id = decoded.get("user_id")
+        fund = data.get("fund")
+        amount = data.get("amount")
+
+        if not fund or not amount:
+            return {"error": "Fund and amount are required."}, 400
+
+        db = get_db()
+        user = db.execute("SELECT cash FROM user WHERE id = ?", (user_id,)).fetchone()
+
+        if not user:
+            return {"error": "User not found."}, 404
+
+        balance = user["cash"]
+
+        if amount > balance:
+            return {"error": "Insufficient funds."}, 400
+
+        db.execute("UPDATE user SET cash = cash - ? WHERE id = ?", (amount, user_id))
+
+        db.execute(
+            "INSERT INTO history (user_id, fund) VALUES (?, ?)",
+            (user_id, fund)
+        )
+
+        db.commit()
+        return {"message": "Investment successful."}, 201
+
+    except Exception as e:
+        print(f"Error during investment: {e}")
         return {"error": "An unexpected error occurred."}, 500

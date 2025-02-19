@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Invest.module.css";
 
 const Invest = () => {
   const [selectedFund, setSelectedFund] = useState("");
   const [amount, setAmount] = useState("");
+  const navigate = useNavigate();
 
-  // Sample funds (Replace with backend data later)
   const funds = [
     { id: "1", name: "Cushon Growth Fund" },
     { id: "2", name: "Cushon Ethical Fund" },
@@ -13,14 +14,47 @@ const Invest = () => {
     { id: "4", name: "Cushon Retirement Fund" },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!selectedFund || !amount) {
       alert("Please select a fund and enter an amount.");
       return;
     }
-    alert(`Investing £${amount} into ${selectedFund}`);
-    // Later: Send request to backend to process the investment
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You must be logged in to invest.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/auth/invest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          fund: selectedFund,
+          amount: parseFloat(amount),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`Successfully invested £${amount} into ${selectedFund}`);
+        setAmount("");
+        setSelectedFund("");
+        navigate("/portfolio");
+      } else {
+        alert(data.error || "Investment failed.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
