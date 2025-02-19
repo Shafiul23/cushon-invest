@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Snackbar } from "@mui/material";
 import styles from "./Invest.module.css";
 
 const Invest = () => {
   const [selectedFund, setSelectedFund] = useState("");
   const [amount, setAmount] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
 
   const funds = [
@@ -18,13 +21,29 @@ const Invest = () => {
     e.preventDefault();
 
     if (!selectedFund || !amount) {
-      alert("Please select a fund and enter an amount.");
+      setErrorMessage("Please select a fund and enter an amount.");
+      setOpenSnackbar(true);
+      return;
+    }
+
+    const parsedAmount = parseFloat(amount);
+
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      setErrorMessage("Please enter a valid amount.");
+      setOpenSnackbar(true);
+      return;
+    }
+
+    if (parsedAmount > 50000) {
+      setErrorMessage("Maximum investment limit is £50,000.");
+      setOpenSnackbar(true);
       return;
     }
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You must be logged in to invest.");
+      setErrorMessage("You must be logged in to invest.");
+      setOpenSnackbar(true);
       return;
     }
 
@@ -37,24 +56,30 @@ const Invest = () => {
         },
         body: JSON.stringify({
           fund: selectedFund,
-          amount: parseFloat(amount),
+          amount: parsedAmount,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert(`Successfully invested £${amount} into ${selectedFund}`);
+        alert(`Successfully invested £${parsedAmount} into ${selectedFund}`);
         setAmount("");
         setSelectedFund("");
         navigate("/portfolio");
       } else {
-        alert(data.error || "Investment failed.");
+        setErrorMessage(data.error || "Investment failed.");
+        setOpenSnackbar(true);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
+      setErrorMessage("Something went wrong. Please try again.");
+      setOpenSnackbar(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -89,6 +114,13 @@ const Invest = () => {
           Invest
         </button>
       </form>
+
+      <Snackbar
+        open={openSnackbar}
+        message={errorMessage || "Something went wrong"}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      />
     </div>
   );
 };

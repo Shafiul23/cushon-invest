@@ -185,3 +185,75 @@ def get_history():
     except Exception as e:
         print(f"Error fetching history: {e}")
         return {"error": "An unexpected error occurred."}, 500
+
+
+@bp.route('/balance', methods=['GET'])
+def get_balance():
+    try:
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return {"error": "Missing token"}, 401
+
+        token = auth_header.split(" ")[1]
+        decoded = decode_jwt(token)
+        if isinstance(decoded, tuple):
+            return decoded
+
+        user_id = decoded.get("user_id")
+
+        db = get_db()
+        user = db.execute("SELECT cash FROM user WHERE id = ?", (user_id,)).fetchone()
+
+        if not user:
+            return {"error": "User not found."}, 404
+
+        return {"balance": user["cash"]}
+
+    except Exception as e:
+        print(f"Error fetching balance: {e}")
+        return {"error": "An unexpected error occurred."}, 500
+
+
+@bp.route('/deposit', methods=['POST'])
+def deposit():
+    try:
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return {"error": "Missing token"}, 401
+
+        token = auth_header.split(" ")[1]
+        decoded = decode_jwt(token)
+        if isinstance(decoded, tuple):
+            return decoded
+
+        user_id = decoded.get("user_id")
+
+        data = request.get_json()
+        if not data or "amount" not in data:
+            return {"error": "Invalid input"}, 400
+
+        try:
+            amount = float(data["amount"])
+            if amount <= 0:
+                return {"error": "Deposit amount must be greater than zero."}, 400
+            if amount > 50000:
+                return {"error": "Deposit amount must be less than 50000."}, 400
+        except ValueError:
+            return {"error": "Invalid amount format."}, 400
+
+        db = get_db()
+        user = db.execute("SELECT cash FROM user WHERE id = ?", (user_id,)).fetchone()
+
+        if not user:
+            return {"error": "User not found."}, 404
+
+        db.execute("UPDATE user SET cash = cash + ? WHERE id = ?", (amount, user_id))
+        db.commit()
+
+        updated_balance = db.execute("SELECT cash FROM user WHERE id = ?", (user_id,)).fetchone()["cash"]
+
+        return {"message": "Deposit successful", "new_balance": updated_balance}, 200
+
+    except Exception as e:
+        print(f"Error processing deposit: {e}")
+        return {"error": "An unexpected error occurred."}, 500

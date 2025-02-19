@@ -6,6 +6,7 @@ import Invest from "./pages/Invest/Invest";
 import Login from "./pages/Login/Login";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import Register from "./pages/Register/Register";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/invest" element={<Invest />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </div>

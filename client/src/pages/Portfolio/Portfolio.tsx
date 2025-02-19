@@ -54,7 +54,12 @@ const Portfolio = () => {
               transactions.map((tx) => (
                 <tr key={tx.id}>
                   <td>{tx.fund}</td>
-                  <td>{tx.amount}</td>
+                  <td>
+                    {tx.amount.toLocaleString("en-GB", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </td>
                   <td>{new Date(tx.timestamp).toLocaleString()}</td>
                 </tr>
               ))

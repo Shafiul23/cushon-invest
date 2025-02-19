@@ -38,6 +38,11 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className={styles.navItem}>
+                  <Link to="/profile" className={styles.navLink}>
+                    Profile
+                  </Link>
+                </li>
+                <li className={styles.navItem}>
                   <button
                     onClick={handleLogout}
                     className={styles.logoutButton}

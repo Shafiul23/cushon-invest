@@ -45,6 +45,9 @@ function Home() {
             <Link to="/portfolio" className={styles.buttonPrimary}>
               Portfolio
             </Link>
+            <Link to="/profile" className={styles.buttonPrimary}>
+              Profile
+            </Link>
           </>
         )}
       </div>
