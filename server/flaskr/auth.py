@@ -145,8 +145,8 @@ def invest():
         db.execute("UPDATE user SET cash = cash - ? WHERE id = ?", (amount, user_id))
 
         db.execute(
-            "INSERT INTO history (user_id, fund) VALUES (?, ?)",
-            (user_id, fund)
+            "INSERT INTO history (user_id, fund, amount) VALUES (?, ?, ?)",
+            (user_id, fund, amount)
         )
 
         db.commit()
@@ -154,4 +154,34 @@ def invest():
 
     except Exception as e:
         print(f"Error during investment: {e}")
+        return {"error": "An unexpected error occurred."}, 500
+
+
+
+@bp.route('/history', methods=['GET'])
+def get_history():
+    try:
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            return {"error": "Missing token"}, 401
+
+        token = auth_header.split(" ")[1]
+        decoded = decode_jwt(token)
+        if isinstance(decoded, tuple):
+            return decoded
+
+        user_id = decoded.get("user_id")
+
+        db = get_db()
+        transactions = db.execute("""
+            SELECT id, fund, amount, timestamp
+            FROM history
+            WHERE user_id = ?
+            ORDER BY timestamp DESC
+        """, (user_id,)).fetchall()
+
+        return jsonify([dict(tx) for tx in transactions])
+
+    except Exception as e:
+        print(f"Error fetching history: {e}")
         return {"error": "An unexpected error occurred."}, 500
