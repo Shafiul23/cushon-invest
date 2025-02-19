@@ -1,45 +1,24 @@
-/* .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  background-color: #f4f7fc;
-  min-height: 90vh;
-  box-sizing: border-box;
-} */
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  background-size: cover;
-  background-position: center;
-  color: white;
-  min-height: 90vh;
+  margin: auto;
+  min-height: 100vh;
   box-sizing: border-box;
 }
 
 .title {
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 2rem;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .subtitle {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: #666;
   margin-bottom: 3rem;
-}
-
-.description {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  text-align: left;
-  line-height: 1.8;
-  max-width: 900px;
-  color: #f4f4f4;
+  line-height: 1.4;
 }
 
 p {
@@ -114,8 +93,17 @@ p {
     font-size: 2.5rem;
   }
 
-  .bodyContainer {
-    text-align: left;
+  .subtitle {
+    font-size: 1.4rem;
+  }
+
+  .cards {
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .card {
+    width: 280px;
   }
 
   .buttonGroup {
@@ -127,5 +115,24 @@ p {
 
   .buttonPrimary {
     width: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .cards {
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .card {
+    width: 300px;
   }
 }
