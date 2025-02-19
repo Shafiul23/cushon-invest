@@ -7,6 +7,7 @@ const Profile = () => {
   const [balance, setBalance] = useState<number>(0);
   const [amount, setAmount] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const { username } = useAuth();
 
@@ -35,6 +36,7 @@ const Profile = () => {
   const handleAddFunds = async () => {
     if (amount > 50000) {
       setErrorMessage("Amount cannot exceed £50,000");
+      setSuccessMessage(null);
       setOpenSnackbar(true);
       return;
     }
@@ -55,11 +57,16 @@ const Profile = () => {
       if (!res.ok) throw new Error("Failed to add funds");
 
       const data = await res.json();
-      alert(data.message);
+      setSuccessMessage(data.message || "Funds added successfully!");
+      setErrorMessage(null);
       setBalance(balance + amount);
       setAmount(0);
+      setOpenSnackbar(true);
     } catch (error) {
       console.error("Error adding funds:", error);
+      setErrorMessage("Something went wrong. Please try again.");
+      setSuccessMessage(null);
+      setOpenSnackbar(true);
     }
   };
 
@@ -95,7 +102,7 @@ const Profile = () => {
 
       <Snackbar
         open={openSnackbar}
-        message={errorMessage || "Something went wrong"}
+        message={successMessage || errorMessage || "Something went wrong"}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       />
