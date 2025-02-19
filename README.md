@@ -17,7 +17,7 @@ The project aims to provide a simple interface for retail customers to manage th
 3. **Login Page**  
    ![Login Page](screenshots/login.png)
 
-4. **Home Page**  
+4. **Home Page** - The buttons here change after logging in
    ![Home Page](screenshots/home2.png)
 
 5. **Invest Page**  
@@ -71,7 +71,7 @@ The database consists of two main tables:
 ### Installation
 
 Clone the repository:
-`git clone https://github.com/shafiul23/cushon-isa-investment.git`
+`git clone https://github.com/shafiul23/cushon-invest.git`
 
 #### Frontend Setup:
 
