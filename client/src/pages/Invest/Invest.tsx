@@ -10,10 +10,8 @@ const Invest = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const funds = [
-    { id: "1", name: "Cushon Growth Fund" },
+    { id: "1", name: "Cushon Equities Fund" },
     { id: "2", name: "Cushon Ethical Fund" },
-    { id: "3", name: "Cushon Tech Fund" },
-    { id: "4", name: "Cushon Retirement Fund" },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {

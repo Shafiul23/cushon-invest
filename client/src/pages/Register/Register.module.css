@@ -70,10 +70,6 @@
   margin-bottom: -1.5rem;
 }
 
-.buttonGroup {
-  margin-top: 1.25rem;
-}
-
 .submitButton {
   background-color: #ca3681;
   color: white;
@@ -85,6 +81,7 @@
   transition: background-color 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: -1rem;
 }
 
 .submitButton:hover {
